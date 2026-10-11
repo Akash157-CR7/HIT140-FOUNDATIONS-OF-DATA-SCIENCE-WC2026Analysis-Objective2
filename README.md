@@ -47,12 +47,12 @@ training set.
 
 **Every split is grouped by `match_id`,** so the two rows of a fixture are never separated.
 
-**NRMSE** divides RMSE by one explicit named constant per model — `RANGE21` = 10.0 and `RANGE22` =
-7.0, the range of that model's response across its training rows — passed into the metric rather
+**NRMSE** divides RMSE by one explicit named constant per model - `RANGE21` = 10.0 and `RANGE22` =
+7.0, the range of that model's response across its training rows - passed into the metric rather
 than inferred from whichever array is to hand. The per-fold alternative is computed alongside, and
 the two do **not** agree closely: up to 0.004 apart on model 2.1 and 0.008 on model 2.2, about four
 per cent of a typical NRMSE. A range is fixed by two observations, so a fold that drops the 7–0
-group-stage result keeps a denominator of 5 or 6 instead of 7 — 30 of model 2.2's 150 folds — and
+group-stage result keeps a denominator of 5 or 6 instead of 7 - 30 of model 2.2's 150 folds - and
 its NRMSE rises. The per-fold version is the less stable of the two, which is why the fixed one is
 reported; the notebook prints the fold-range distribution so the instability is visible.
 
@@ -70,7 +70,7 @@ publication time against kick-off time rather than date against date.
 
 **Imputed values standing in for measurements.** A team's opening fixture has no tournament history.
 Rather than fill those 48 rows with zero, they carry each team's form over their last ten
-internationals before the tournament — all 480 of those fixtures listed individually with sources,
+internationals before the tournament - all 480 of those fixtures listed individually with sources,
 402 confirmed against a second source, none dated on or after the opening match of 11 June 2026.
 
 **Selection that has seen the test rows.** The notebook measures this rather than asserting it is
@@ -93,12 +93,12 @@ A single 21-match holdout has a standard deviation of 0.22 on model 2.1, so no n
 worth defending on its own. The defensible claims are ranges: roughly **0.28 to 0.34** for goal
 difference and **0.17 to 0.21** for goals scored. The 200-draw column is a *sensitivity analysis* —
 overlapping draws from the same 104 matches, measuring how much one holdout score depends on which
-21 matches it contains — not an additional independent test set.
+21 matches it contains - not an additional independent test set.
 
 Six algorithms were compared on identical folds. Random forest leads model 2.1 by 0.007 over
 multiple linear regression (16 of 30 repeats) and Ridge leads model 2.2 by 0.002
 over it (an exact 15–15 split of the repeats). Each gap is far smaller than its own repeat-to-repeat
-spread — 0.049 and 0.018 respectively — so we recommend the linear model on interpretability and
+spread - 0.049 and 0.018 respectively - so we recommend the linear model on interpretability and
 make no claim of superiority for any method.
 
 **No confidence intervals or p-values are quoted from the repeats.** They share one training set and
