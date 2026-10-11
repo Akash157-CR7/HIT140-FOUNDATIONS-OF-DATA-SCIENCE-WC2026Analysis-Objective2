@@ -1,10 +1,10 @@
 # HIT140 Assessment 3 - Objective 2
 ## FIFA World Cup 2026: two pre-match regression models
 **Darwin Group 46**  
- *Angel Shahi (s400420)* 
- *Sabraham Shrestha (s404389)* 
- *Akash Singh (s401643)* 
- *Nishant Shrestha (s400342)*
+ #Angel Shahi (s400420)
+ #Sabraham Shrestha (s404389)
+ #Akash Singh (s401643)
+ #Nishant Shrestha (s400342)
 
 ## What this is
 
