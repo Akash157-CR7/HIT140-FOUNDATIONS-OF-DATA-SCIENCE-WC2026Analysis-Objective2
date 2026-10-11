@@ -32,8 +32,8 @@ minutes.
 
 This is the part of the project worth reading first, because it is what the numbers mean.
 
-**Nothing data-driven ever sees the rows it will be scored on.** The variable-selection procedure —
-correlation screening, collinearity pruning at |r| = 0.85 and a matrix-rank guard — is one function
+**Nothing data-driven ever sees the rows it will be scored on.** The variable-selection procedure -
+correlation screening, collinearity pruning at |r| = 0.85 and a matrix-rank guard - is one function
 that reads only the rows it is handed, and it is re-run from scratch inside every cross-validation
 fold. Hyperparameters are tuned by a further grouped cross-validation nested inside that fold's
 training rows. Model 2.2's shared-variable cap is re-chosen inside every fold too, which is the
