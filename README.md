@@ -1,10 +1,6 @@
-# HIT140 Assessment 3 - Objective 2
+# HIT140 Assessment 3 — Objective 2
 ## FIFA World Cup 2026: two pre-match regression models
-**Darwin Group 46**  
- ### Angel Shahi (s400420)
- ### Sabraham Shrestha (s404389)
- ### Akash Singh (s401643)
- ### Nishant Shrestha (s400342)
+**Darwin Group 46** — Angel Shahi (s400420) · Sabraham Shrestha (s404389) · Akash Singh (s401643) · Nishant Shrestha (s400342)
 
 ## What this is
 
@@ -32,8 +28,8 @@ minutes.
 
 This is the part of the project worth reading first, because it is what the numbers mean.
 
-**Nothing data-driven ever sees the rows it will be scored on.** The variable-selection procedure -
-correlation screening, collinearity pruning at |r| = 0.85 and a matrix-rank guard - is one function
+**Nothing data-driven ever sees the rows it will be scored on.** The variable-selection procedure —
+correlation screening, collinearity pruning at |r| = 0.85 and a matrix-rank guard — is one function
 that reads only the rows it is handed, and it is re-run from scratch inside every cross-validation
 fold. Hyperparameters are tuned by a further grouped cross-validation nested inside that fold's
 training rows. Model 2.2's shared-variable cap is re-chosen inside every fold too, which is the
@@ -47,12 +43,12 @@ training set.
 
 **Every split is grouped by `match_id`,** so the two rows of a fixture are never separated.
 
-**NRMSE** divides RMSE by one explicit named constant per model - `RANGE21` = 10.0 and `RANGE22` =
-7.0, the range of that model's response across its training rows - passed into the metric rather
+**NRMSE** divides RMSE by one explicit named constant per model — `RANGE21` = 10.0 and `RANGE22` =
+7.0, the range of that model's response across its training rows — passed into the metric rather
 than inferred from whichever array is to hand. The per-fold alternative is computed alongside, and
 the two do **not** agree closely: up to 0.004 apart on model 2.1 and 0.008 on model 2.2, about four
 per cent of a typical NRMSE. A range is fixed by two observations, so a fold that drops the 7–0
-group-stage result keeps a denominator of 5 or 6 instead of 7 - 30 of model 2.2's 150 folds - and
+group-stage result keeps a denominator of 5 or 6 instead of 7 — 30 of model 2.2's 150 folds — and
 its NRMSE rises. The per-fold version is the less stable of the two, which is why the fixed one is
 reported; the notebook prints the fold-range distribution so the instability is visible.
 
@@ -70,7 +66,7 @@ publication time against kick-off time rather than date against date.
 
 **Imputed values standing in for measurements.** A team's opening fixture has no tournament history.
 Rather than fill those 48 rows with zero, they carry each team's form over their last ten
-internationals before the tournament - all 480 of those fixtures listed individually with sources,
+internationals before the tournament — all 480 of those fixtures listed individually with sources,
 402 confirmed against a second source, none dated on or after the opening match of 11 June 2026.
 
 **Selection that has seen the test rows.** The notebook measures this rather than asserting it is
@@ -93,12 +89,12 @@ A single 21-match holdout has a standard deviation of 0.22 on model 2.1, so no n
 worth defending on its own. The defensible claims are ranges: roughly **0.28 to 0.34** for goal
 difference and **0.17 to 0.21** for goals scored. The 200-draw column is a *sensitivity analysis* —
 overlapping draws from the same 104 matches, measuring how much one holdout score depends on which
-21 matches it contains - not an additional independent test set.
+21 matches it contains — not an additional independent test set.
 
 Six algorithms were compared on identical folds. Random forest leads model 2.1 by 0.007 over
 multiple linear regression (16 of 30 repeats) and Ridge leads model 2.2 by 0.002
 over it (an exact 15–15 split of the repeats). Each gap is far smaller than its own repeat-to-repeat
-spread - 0.049 and 0.018 respectively - so we recommend the linear model on interpretability and
+spread — 0.049 and 0.018 respectively — so we recommend the linear model on interpretability and
 make no claim of superiority for any method.
 
 **No confidence intervals or p-values are quoted from the repeats.** They share one training set and
@@ -126,13 +122,37 @@ prov/form_match_log_full.csv         the 480 fixtures sorted by team, with sourc
 requirements.txt
 ```
 
-## Method
+## Method, mapped to the unit
 
-Weeks 1 to 9 of the unit: exploratory analysis and Pearson correlation, data visualisation, simple
-and multiple linear regression, training and test splits, MAE / MSE / RMSE / NRMSE, R squared and
-adjusted R squared, and the regression assumptions. For the competing-algorithm comparison the
-notebook also fits Ridge, K-nearest neighbours, random forest and gradient boosting from
-scikit-learn, with hyperparameters tuned by cross-validation nested inside the training folds.
+Every technique below was checked against the week's learning materials rather than assumed.
+
+| Week | What it teaches | Where it is used here |
+|---|---|---|
+| 1 | regression as supervised prediction; EDA; data preparation | the framing of both objectives |
+| 2 | levels of measurement; descriptive statistics | `best_finish_ordinal` treated as ordinal; the response summaries |
+| 3 | normal distribution; Z-scores and standardisation | `StandardScaler` before the coefficient comparison |
+| 4 | hypothesis testing, p-values, significance | **deliberately not used** — see below |
+| 5 | pandas merge/join/concat; missing-data strategies | building the analysis tables; rejecting mean substitution for opening fixtures |
+| 6 | scatterplots; Pearson's r | the correlation screen and the candidate figures |
+| 7 | data visualisation and storytelling | all four report figures |
+| 8 | simple linear regression; train/test split; MAE, MSE, RMSE, NRMSE | the error metrics and the held-out matches |
+| 9 | multiple linear regression; OLS; R² and adjusted R²; regression assumptions | both models; the |r| = 0.85 collinearity rule, taken from week 9's "Remove Collinearity"; rescaling inputs; residual diagnostics |
+
+**One technique goes beyond the unit, deliberately.** Week 8 teaches a single train/test split. We
+use thirty repeats of grouped five-fold cross-validation instead, because a single 21-match split of
+this dataset has a standard deviation of 0.22 and cannot separate anything. The extension is named
+in section 3 of the report rather than slipped in.
+
+**Four algorithms also sit outside weeks 1–9** — Ridge, K-nearest neighbours, random forest and
+gradient boosting, with `GridSearchCV` for tuning. These are used only for the competing-algorithm
+comparison the High Distinction criterion asks for, which the unit coordinator confirmed on the
+discussion board may use scikit-learn regressors beyond the taught set. The two models we report and
+recommend are both ordinary multiple linear regression.
+
+**Week 4's hypothesis testing is available to us and we chose not to use it.** p-values and
+confidence intervals would be valid on independent samples; our thirty repeats share one training
+set and differ only in fold boundaries, so quoting them would misrepresent what they measure. The
+notebook reports spreads and splits instead.
 
 ## Data sources
 
